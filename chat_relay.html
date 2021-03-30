@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Stream Elements | Chat Forwarder</title>
+    <link rel="stylesheet" href="bootstrap452.min.css">
+    <link rel="stylesheet" href="dark.min.css">
+    <script type="text/javascript" src="tmi.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="max-width:500px;">
+	<div class="text-center mt-4 mb-4">
+		<h1 class="h3 mb-2 font-weight-normal">Chat Forwarder</h1>
+	</div>
+	<div class="card mt-4 mb-4">
+		<div class="card-body">
+			Forward messages from one Twitch channel to another Twitch channel that you own.<br>Generate an auth token for the account that you are forwarding messages to.<br><a href="https://twitchtokengenerator.com/" target="_blank">Generate a Twitch Auth Token</a>
+		 </div>
+	</div>
+	<div class="form-label-group mb-2">
+		<input type="text" id="mainAccount" class="form-control" required>
+		<label for="mainAccount"><small>Source Twitch Account</small></label>
+	</div>
+	<div class="form-label-group mb-2">
+		<input type="text" id="botAcccount" class="form-control" required>
+		<label for="botAcccount"><small>Forward Messages To</small></label>
+	</div>
+	<div class="form-label-group mb-2">
+		<input type="password" id="accessToken" class="form-control" required>
+		<label for="accessToken"><small>Auth token from the account that you are forwarding messages to <span id="show_token" style="cursor:pointer;">[show]</span></small></label>
+	</div>
+	<button class="btn btn-lg btn-success btn-block" id="start_button" type="button">Start</button>
+	<button class="btn btn-lg btn-danger btn-block" id="stop_button" type="button" disabled>Stop</button>
+	<button class="btn btn-lg btn-default btn-block" id="removestorage_button" type="button">Remove Local Storage</button>
+</div>
+
+<div class="container mt-4">
+	<div style="overflow-y:auto;overflow-x:hidden;max-height:300px;">
+		<ul class="list-group-flush" id="status" style="padding-left:0;"></ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	document.getElementById("start_button").addEventListener("click",function(e){
+	    this.disabled = "true";
+	    document.getElementById("stop_button").disabled = "";
+		var mainAccount = document.getElementById("mainAccount").value;
+		var botAcccount = document.getElementById("botAcccount").value;
+		var accessToken = document.getElementById("accessToken").value;
+		localStorage.setItem("mainAccount", mainAccount);
+		localStorage.setItem("botAcccount", botAcccount);
+		localStorage.setItem("accessToken", accessToken);
+	    startChat(localStorage.getItem("mainAccount"),localStorage.getItem("botAcccount"),localStorage.getItem("accessToken"));
+	},false);
+
+	document.getElementById("stop_button").addEventListener("click",function(e){
+	    this.disabled = "true";
+	    reload();
+	},false);
+
+	document.getElementById("show_token").addEventListener("click",function(e){
+		if (document.getElementById("show_token").innerHTML === "[hide]") {
+			document.getElementById("show_token").innerHTML = "[show]";
+			document.getElementById("accessToken").setAttribute('type','password');
+		} else {
+			document.getElementById("show_token").innerHTML = "[hide]";
+			document.getElementById("accessToken").setAttribute('type','text');
+		}
+	},false);
+
+	document.getElementById("removestorage_button").addEventListener("click",function(e){
+	    this.disabled = "true";
+	    removeLocalStorage();
+	},false);
+
+	function startChat(mainAccount,botAcccount,accessToken) {
+	    const client = new tmi.Client({
+	        options: { debug: true },
+	        connection: { reconnect: true },
+	        identity: {
+	            username: botAcccount,
+	            password: 'oauth:' + localStorage.getItem("accessToken")
+	        },
+	        channels: [mainAccount]
+	    });
+
+	    client.connect().catch(console.error);
+
+	    client.on('message', (channel, user, message, self) => {
+
+	        if(self) return;
+
+	        if (user['message-type'] === 'chat') {
+	            client.say(botAcccount, '@' + user.username + ': ' + message);
+	        }
+	    });
+	}
+
+	function reload() {
+	    setTimeout("window.location.reload();", 1000);
+	}
+
+	function removeLocalStorage() {
+	    setTimeout("window.localStorage.clear();", 1000);
+	    reload()
+	}
+
+	document.getElementById("mainAccount").value = localStorage.getItem("mainAccount");
+	document.getElementById("botAcccount").value = localStorage.getItem("botAcccount");
+	document.getElementById("accessToken").value = localStorage.getItem("accessToken");
+
+	console.log = function(message) {
+		document.getElementById('status').innerHTML += '<li class="list-group-item">' + message + '</li>';
+	};
+	
+</script>
+
+</body>
+</html>
