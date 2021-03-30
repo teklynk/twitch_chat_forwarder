@@ -17,3 +17,5 @@ There may be other use cases for this, like multiple Twitch streamers forwarding
 **Setup:**
 
 Just clone the repo and open chat_relay.html in your browser. No web server is needed! Everything runs client-side using plain old javascript, html and css. Just be sure to use a modern browser not running in incognito mode since it does use localstorage.
+
+![image](https://raw.githubusercontent.com/teklynk/twitch_chat_forwarder/master/Screenshot%20from%202021-03-30%2019-48-08.png)
