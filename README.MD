@@ -20,6 +20,6 @@ There may be other use cases for this, like multiple Twitch streamers forwarding
 
 Just clone the repo and open chat_relay.html in your browser. No web server is needed! Everything runs client-side using plain old javascript, html and css.
 
-![image](https://github.com/teklynk/twitch_chat_forwarder/blob/master/Screenshot%20from%202021-03-30%2021-37-05.png?raw=true" alt="image" style="zoom:80%;)
+<img src="https://github.com/teklynk/twitch_chat_forwarder/blob/master/Screenshot%20from%202021-03-30%2021-37-05.png?raw=true" alt="image" style="zoom:80%;" />
 
 <img src="https://github.com/teklynk/twitch_chat_forwarder/blob/master/Screenshot%20from%202021-03-30%2021-13-53.png?raw=true" alt="image" style="zoom:80%;" />
