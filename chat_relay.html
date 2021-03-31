@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="dark.min.css">
     <script type="text/javascript" src="tmi.min.js"></script>
 </head>
-<body>
+<body onload="onInit()">
 
 <div class="container" style="max-width:500px;">
 	<div class="text-center mt-4 mb-4">
@@ -45,24 +45,38 @@
 
 <script type="text/javascript">
 
-	document.getElementById("start_button").addEventListener("click",function(e){
-	    this.disabled = "true";
-	    document.getElementById("stop_button").disabled = "";
+	function onInit() {
+		if (!window.localStorage){
+			alert('No support for localStorage');
+		}
+
+		document.getElementById("mainAccount").value = localStorage.getItem("mainAccount");
+		document.getElementById("botAcccount").value = localStorage.getItem("botAcccount");
+		document.getElementById("accessToken").value = localStorage.getItem("accessToken");
+
+		console.log = function(message) {
+			document.getElementById('status').innerHTML += '<li class="list-group-item">' + message + '</li>';
+		};
+	}
+
+	document.getElementById("start_button").addEventListener("click",function(e) {
+		this.disabled = "true";
+		document.getElementById("stop_button").disabled = "";
 		var mainAccount = document.getElementById("mainAccount").value;
 		var botAcccount = document.getElementById("botAcccount").value;
 		var accessToken = document.getElementById("accessToken").value;
 		localStorage.setItem("mainAccount", mainAccount);
 		localStorage.setItem("botAcccount", botAcccount);
 		localStorage.setItem("accessToken", accessToken);
-	    startChat(localStorage.getItem("mainAccount"),localStorage.getItem("botAcccount"),localStorage.getItem("accessToken"));
+		startChat(localStorage.getItem("mainAccount"),localStorage.getItem("botAcccount"),localStorage.getItem("accessToken"));
 	},false);
 
-	document.getElementById("stop_button").addEventListener("click",function(e){
+	document.getElementById("stop_button").addEventListener("click",function(e) {
 	    this.disabled = "true";
 	    reload();
 	},false);
 
-	document.getElementById("show_token").addEventListener("click",function(e){
+	document.getElementById("show_token").addEventListener("click",function(e) {
 		if (document.getElementById("show_token").innerHTML === "[hide]") {
 			document.getElementById("show_token").innerHTML = "[show]";
 			document.getElementById("accessToken").setAttribute('type','password');
@@ -72,7 +86,7 @@
 		}
 	},false);
 
-	document.getElementById("removestorage_button").addEventListener("click",function(e){
+	document.getElementById("removestorage_button").addEventListener("click",function(e) {
 	    this.disabled = "true";
 	    removeLocalStorage();
 	},false);
@@ -83,7 +97,7 @@
 	        connection: { reconnect: true },
 	        identity: {
 	            username: botAcccount,
-	            password: 'oauth:' + localStorage.getItem("accessToken")
+	            password: 'oauth:' + accessToken
 	        },
 	        channels: [mainAccount]
 	    });
@@ -92,7 +106,7 @@
 
 	    client.on('message', (channel, user, message, self) => {
 
-	        if(self) return;
+	        if (self) return;
 
 	        if (user['message-type'] === 'chat') {
 	            client.say(botAcccount, '@' + user.username + ': ' + message);
@@ -108,14 +122,6 @@
 	    setTimeout("window.localStorage.clear();", 1000);
 	    reload()
 	}
-
-	document.getElementById("mainAccount").value = localStorage.getItem("mainAccount");
-	document.getElementById("botAcccount").value = localStorage.getItem("botAcccount");
-	document.getElementById("accessToken").value = localStorage.getItem("accessToken");
-
-	console.log = function(message) {
-		document.getElementById('status').innerHTML += '<li class="list-group-item">' + message + '</li>';
-	};
 	
 </script>
 
