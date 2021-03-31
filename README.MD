@@ -10,7 +10,9 @@ You can of course stream PSVR right from the Playstation but you will not have c
 
 You can also capture your PSVR on a PC and stream it that way. But how do you see chat while in VR?
 
-One solution is to capture PSVR on PC and stream it, while at the same time stream to Twitch from the Playstation that is using an alternate Twitch account. This way you will be able to see chat while in PSVR and still use OBS for transitions, overlays, alerts... The idea is to send chat messages from your main Twitch account to the alternate Twitch account that your PSVR is using.
+One solution is to capture PSVR on PC and stream it, while at the same time stream to Twitch from the Playstation that is using an alternate Twitch account. This way you will be able to see chat while in PSVR and still use OBS for transitions, overlays, alerts... The idea is to send chat messages from your main Twitch account to the alternate Twitch account that your PSVR is using. 
+
+This guy explains why you would want to do it this way. [Streaming PlayStation VR with OBS & see stream chat inside the headset!](https://www.youtube.com/watch?v=cdseyPx7LSI)
 
 There may be other use cases for this, like multiple Twitch streamers forwarding chat messages to a main event chat channel that has more viewers and exposure?  
 
