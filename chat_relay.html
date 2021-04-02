@@ -11,118 +11,178 @@
 <body onload="onInit()">
 
 <div class="container" style="max-width:500px;">
-	<div class="text-center mt-4 mb-4">
-		<h1 class="h3 mb-2 font-weight-normal">Twitch Chat Forwarder</h1>
-	</div>
-	<div class="card mt-4 mb-4">
-		<div class="card-body">
-			Forward messages from one Twitch channel to another Twitch channel.<br><br>Generate an auth token for the account that you are forwarding messages to.<br>
-			<a class="btn btn-lg btn-secondary btn-block mt-4" href="https://twitchtokengenerator.com/" target="_blank">Generate a Twitch Auth Token</a>
-		 </div>
-	</div>
-	<div class="form-label-group mb-2">
-		<input type="text" id="mainAccount" class="form-control" required>
-		<label for="mainAccount"><small>Source Twitch Account</small></label>
-	</div>
-	<div class="form-label-group mb-2">
-		<input type="text" id="botAcccount" class="form-control" required>
-		<label for="botAcccount"><small>Forward Messages To</small></label>
-	</div>
-	<div class="form-label-group mb-2">
-		<input type="password" id="accessToken" class="form-control" required>
-		<label for="accessToken"><small>Auth token from the account that you are forwarding messages to <span id="show_token" style="cursor:pointer;">[show]</span></small></label>
-	</div>
-	<button class="btn btn-lg btn-success btn-block" id="start_button" type="button">Start</button>
-	<button class="btn btn-lg btn-danger btn-block" id="stop_button" type="button" disabled>Stop</button>
-	<button class="btn btn-lg btn-dark btn-block" id="removestorage_button" type="button">Reset Settings</button>
+    <div class="text-center mt-4 mb-4">
+        <h1 class="h3 mb-2 font-weight-normal">Twitch Chat Forwarder</h1>
+    </div>
+    <div class="card mt-4 mb-4">
+        <div class="card-body">
+            Forward messages from one Twitch channel to another Twitch channel.<br><br>Generate an auth token for the
+            account that you are forwarding messages to.<br>
+            <a class="btn btn-lg btn-secondary btn-block mt-4" href="https://twitchtokengenerator.com/" target="_blank">Generate
+                a Twitch Auth Token</a>
+        </div>
+    </div>
+    <div class="form-label-group mb-2">
+        <input type="text" id="mainAccount" class="form-control" required>
+        <label for="mainAccount">
+            <small>Source Twitch Account</small>
+        </label>
+    </div>
+    <div class="form-label-group mb-2">
+        <input type="text" id="botAcccount" class="form-control" required>
+        <label for="botAcccount">
+            <small>Forward Messages To</small>
+        </label>
+    </div>
+    <div class="form-label-group mb-2">
+        <input type="password" id="accessToken" class="form-control" required>
+        <label for="accessToken">
+            <small>Auth token from the account that you are forwarding messages to <span id="show_token"
+                                                                                         style="cursor:pointer;">[show]</span>
+            </small>
+        </label>
+    </div>
+    <div class="form-label-group mb-2">
+        <select class="form-control" id="spChars">
+            <option value="" selected>none</option>
+            <option value="1">< username ></option>
+            <option value="2">- username -</option>
+            <option value="3">:: username ::</option>
+            <option value="4">@username</option>
+            <option value="5">[ username ]</option>
+        </select>
+        <label for="botAcccount">
+            <small>Add special characters to user names</small>
+        </label>
+    </div>
+
+    <button class="btn btn-lg btn-success btn-block" id="start_button" type="button">Start</button>
+    <button class="btn btn-lg btn-danger btn-block" id="stop_button" type="button" disabled>Stop</button>
+    <button class="btn btn-lg btn-dark btn-block" id="removestorage_button" type="button">Reset Settings</button>
 </div>
 
 <div class="container mt-4">
-	<div style="overflow-y:auto;overflow-x:hidden;max-height:300px;">
-		<ul class="list-group-flush" id="status" style="padding-left:0;"></ul>
-	</div>
+    <div style="overflow-y:auto;overflow-x:hidden;max-height:300px;">
+        <ul class="list-group-flush" id="status" style="padding-left:0;"></ul>
+    </div>
 </div>
 
 <script type="text/javascript">
 
-	function onInit() {
-		if (!window.localStorage){
-			alert('No support for localStorage');
-		}
+    function onInit() {
+        if (!window.localStorage) {
+            alert('No support for localStorage');
+        }
 
-		document.getElementById("mainAccount").value = localStorage.getItem("mainAccount");
-		document.getElementById("botAcccount").value = localStorage.getItem("botAcccount");
-		document.getElementById("accessToken").value = localStorage.getItem("accessToken");
+        document.getElementById("mainAccount").value = localStorage.getItem("mainAccount");
+        document.getElementById("botAcccount").value = localStorage.getItem("botAcccount");
+        document.getElementById("accessToken").value = localStorage.getItem("accessToken");
+        document.getElementById("spChars").value = localStorage.getItem("spChars");
 
-		console.log = function(message) {
-			document.getElementById('status').innerHTML += '<li class="list-group-item">' + message + '</li>';
-		};
-	}
+        if (document.getElementById("spChars").value === localStorage.getItem("spChars")) {
+            document.getElementById("spChars").value = localStorage.getItem("spChars");
+        }
 
-	document.getElementById("start_button").addEventListener("click",function(e) {
-		this.disabled = "true";
-		document.getElementById("stop_button").disabled = "";
-		var mainAccount = document.getElementById("mainAccount").value;
-		var botAcccount = document.getElementById("botAcccount").value;
-		var accessToken = document.getElementById("accessToken").value;
-		localStorage.setItem("mainAccount", mainAccount);
-		localStorage.setItem("botAcccount", botAcccount);
-		localStorage.setItem("accessToken", accessToken);
-		startChat(localStorage.getItem("mainAccount"),localStorage.getItem("botAcccount"),localStorage.getItem("accessToken"));
-	},false);
+        console.log = function (message) {
+            document.getElementById('status').innerHTML += '<li class="list-group-item">' + message + '</li>';
+        };
+    }
 
-	document.getElementById("stop_button").addEventListener("click",function(e) {
-	    this.disabled = "true";
-	    reload();
-	},false);
+    document.getElementById("start_button").addEventListener("click", function (e) {
+        this.disabled = "true";
+        document.getElementById("stop_button").disabled = "";
+        let mainAccount = document.getElementById("mainAccount").value;
+        let botAcccount = document.getElementById("botAcccount").value;
+        let accessToken = document.getElementById("accessToken").value;
+        let spChars = document.getElementById("spChars").value;
+        localStorage.setItem("mainAccount", mainAccount);
+        localStorage.setItem("botAcccount", botAcccount);
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("spChars", spChars);
+        startChat(localStorage.getItem("mainAccount"), localStorage.getItem("botAcccount"), localStorage.getItem("accessToken"), localStorage.getItem("spChars"));
+    }, false);
 
-	document.getElementById("show_token").addEventListener("click",function(e) {
-		if (document.getElementById("show_token").innerHTML === "[hide]") {
-			document.getElementById("show_token").innerHTML = "[show]";
-			document.getElementById("accessToken").setAttribute('type','password');
-		} else {
-			document.getElementById("show_token").innerHTML = "[hide]";
-			document.getElementById("accessToken").setAttribute('type','text');
-		}
-	},false);
+    document.getElementById("stop_button").addEventListener("click", function (e) {
+        this.disabled = "true";
+        reload();
+    }, false);
 
-	document.getElementById("removestorage_button").addEventListener("click",function(e) {
-	    this.disabled = "true";
-	    removeLocalStorage();
-	},false);
+    document.getElementById("show_token").addEventListener("click", function (e) {
+        if (document.getElementById("show_token").innerHTML === "[hide]") {
+            document.getElementById("show_token").innerHTML = "[show]";
+            document.getElementById("accessToken").setAttribute('type', 'password');
+        } else {
+            document.getElementById("show_token").innerHTML = "[hide]";
+            document.getElementById("accessToken").setAttribute('type', 'text');
+        }
+    }, false);
 
-	function startChat(mainAccount,botAcccount,accessToken) {
-	    const client = new tmi.Client({
-	        options: { debug: true },
-	        connection: { reconnect: true },
-	        identity: {
-	            username: botAcccount,
-	            password: 'oauth:' + accessToken
-	        },
-	        channels: [mainAccount]
-	    });
+    document.getElementById("removestorage_button").addEventListener("click", function (e) {
+        this.disabled = "true";
+        removeLocalStorage();
+    }, false);
 
-	    client.connect().catch(console.error);
+    function startChat(mainAccount, botAcccount, accessToken, spChars) {
 
-	    client.on('message', (channel, user, message, self) => {
+        let inputs = document.getElementsByTagName('input');
 
-	        if (self) return;
+        for (i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true;
+        }
 
-	        if (user['message-type'] === 'chat') {
-	            client.say(botAcccount, '@' + user.username + ': ' + message);
-	        }
-	    });
-	}
+        let selects = document.getElementsByTagName('select');
 
-	function reload() {
-	    setTimeout("window.location.reload();", 1000);
-	}
+        for (i = 0; i < selects.length; i++) {
+            selects[i].disabled = true;
+        }
 
-	function removeLocalStorage() {
-	    setTimeout("window.localStorage.clear();", 1000);
-	    reload()
-	}
-	
+        let usernameStr;
+
+        const client = new tmi.Client({
+            options: {debug: true},
+            connection: {reconnect: true},
+            identity: {
+                username: botAcccount,
+                password: 'oauth:' + accessToken
+            },
+            channels: [mainAccount]
+        });
+
+        client.connect().catch(console.error);
+
+        client.on('message', (channel, user, message, self) => {
+
+            if (self) return;
+
+            if (spChars === '1') {
+                usernameStr = '<' + user.username + '> ';
+            } else if (spChars === '2') {
+                usernameStr = '-' + user.username + '- ';
+            } else if (spChars === '3') {
+                usernameStr = '::' + user.username + ':: ';
+            } else if (spChars === '4') {
+                usernameStr = '@' + user.username + ': ';
+            } else if (spChars === '5') {
+                usernameStr = '[' + user.username + '] ';
+            } else {
+                usernameStr = ' ' + user.username + ': ';
+            }
+
+            if (user['message-type'] === 'chat') {
+                client.say(botAcccount, usernameStr + message);
+            }
+        });
+    }
+
+    function reload() {
+        setTimeout("window.location.reload();", 1000);
+    }
+
+    function removeLocalStorage() {
+        setTimeout("window.localStorage.clear();", 1000);
+        reload()
+    }
+
 </script>
 
 </body>
