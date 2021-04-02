@@ -37,8 +37,10 @@
     <div class="form-label-group mb-2">
         <input type="password" id="accessToken" class="form-control" required>
         <label for="accessToken">
-            <small>Auth token from the account that you are forwarding messages to <span id="show_token"
-                                                                                         style="cursor:pointer;">[show]</span>
+            <small>Auth token from the account that you are forwarding messages to
+                <span id="show_token" style="cursor:pointer;text-align:right;display:inline-block;width:95px;font-size:smaller;vertical-align:top;" title="Show/Hide">
+                    show
+                </span>
             </small>
         </label>
     </div>
@@ -122,11 +124,11 @@
     }, false);
 
     document.getElementById("show_token").addEventListener("click", function (e) {
-        if (document.getElementById("show_token").innerHTML === "[hide]") {
-            document.getElementById("show_token").innerHTML = "[show]";
+        if (document.getElementById("show_token").innerHTML === "hide") {
+            document.getElementById("show_token").innerHTML = "show";
             document.getElementById("accessToken").setAttribute('type', 'password');
         } else {
-            document.getElementById("show_token").innerHTML = "[hide]";
+            document.getElementById("show_token").innerHTML = "hide";
             document.getElementById("accessToken").setAttribute('type', 'text');
         }
     }, false);
