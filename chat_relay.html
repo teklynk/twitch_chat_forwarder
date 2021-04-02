@@ -45,11 +45,11 @@
     <div class="form-label-group mb-2">
         <select class="form-control" id="spChars">
             <option value="" selected>none</option>
-            <option value="1">< username ></option>
-            <option value="2">- username -</option>
-            <option value="3">:: username ::</option>
-            <option value="4">@username</option>
-            <option value="5">[ username ]</option>
+            <option value="1">&lt;username&gt; psvr is so cool!</option>
+            <option value="2">-username- this is great</option>
+            <option value="3">::username:: heya</option>
+            <option value="4">@username: Heck Yea</option>
+            <option value="5">[username] What game is this?</option>
         </select>
         <label for="botAcccount">
             <small>Add special characters to user names</small>
@@ -123,6 +123,8 @@
     }, false);
 
     function startChat(mainAccount, botAcccount, accessToken, spChars) {
+
+        document.getElementById('removestorage_button').disabled = "true";
 
         let inputs = document.getElementsByTagName('input');
 
