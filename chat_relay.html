@@ -99,6 +99,20 @@
         localStorage.setItem("botAcccount", botAcccount);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("spChars", spChars);
+        document.getElementById('removestorage_button').disabled = "true";
+
+        let inputs = document.getElementsByTagName('input');
+
+        for (i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true;
+        }
+
+        let selects = document.getElementsByTagName('select');
+
+        for (i = 0; i < selects.length; i++) {
+            selects[i].disabled = true;
+        }
+
         startChat(localStorage.getItem("mainAccount"), localStorage.getItem("botAcccount"), localStorage.getItem("accessToken"), localStorage.getItem("spChars"));
     }, false);
 
@@ -123,20 +137,6 @@
     }, false);
 
     function startChat(mainAccount, botAcccount, accessToken, spChars) {
-
-        document.getElementById('removestorage_button').disabled = "true";
-
-        let inputs = document.getElementsByTagName('input');
-
-        for (i = 0; i < inputs.length; i++) {
-            inputs[i].disabled = true;
-        }
-
-        let selects = document.getElementsByTagName('select');
-
-        for (i = 0; i < selects.length; i++) {
-            selects[i].disabled = true;
-        }
 
         let usernameStr;
 
