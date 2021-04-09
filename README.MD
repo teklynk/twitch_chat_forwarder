@@ -20,6 +20,6 @@ Just clone or [download](https://github.com/teklynk/twitch_chat_forwarder/archiv
 
 
 
-![Screenshot](https://raw.githubusercontent.com/teklynk/twitch_chat_forwarder/master/Screenshot%20from%202021-03-30%2021-37-05.png)
+![Screenshot](https://raw.githubusercontent.com/teklynk/twitch_chat_forwarder/master/assets/screenshots/Screenshot%20from%202021-03-30%2021-37-05.png)
 
-![Screenshot](https://raw.githubusercontent.com/teklynk/twitch_chat_forwarder/master/Screenshot%20from%202021-03-30%2022-22-28.png)
+![Screenshot](https://raw.githubusercontent.com/teklynk/twitch_chat_forwarder/master/assets/screenshots/Screenshot%20from%202021-03-30%2022-22-28.png)
