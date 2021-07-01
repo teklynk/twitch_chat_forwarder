@@ -16,7 +16,7 @@ This guy explains why you would want to do it this way. [Streaming PlayStation V
 
 ## **Setup:**
 
-Just clone or [download](https://github.com/teklynk/twitch_chat_forwarder/archive/refs/heads/master.zip ) the repo and open "chat_relay.html" in your browser. **No web server needed!** Everything runs client-side using plain old javascript, html and css.
+Just clone or [download](https://github.com/teklynk/twitch_chat_forwarder/archive/refs/heads/master.zip ) the repo and open "index.html" in your browser. **No web server needed!** Everything runs client-side using plain old javascript, html and css.
 
 
 
