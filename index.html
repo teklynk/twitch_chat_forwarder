@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Stream Elements | Chat Forwarder</title>
+    <title>Twitch Chat Forwarder</title>
     <link rel="stylesheet" href="assets/css/bootstrap452.min.css">
     <link rel="stylesheet" href="assets/css/dark.min.css">
     <script type="text/javascript" src="assets/js/tmi.min.js"></script>
@@ -11,17 +11,24 @@
 </head>
 <body onload="onInit()">
 
-<div class="container" style="max-width:500px;">
+<div class="container">
     <div class="text-center mt-4 mb-4">
         <h1 class="h3 mb-2 font-weight-normal">Twitch Chat Forwarder</h1>
     </div>
-    <div class="card mt-4 mb-4">
-        <div class="card-body">
-            Forward messages from one Twitch channel to another Twitch channel.<br><br>Generate an access token for the
-            account that you are forwarding messages to.<br>
-            <a class="btn btn-lg btn-secondary btn-block mt-4" href="https://twitchtokengenerator.com/" target="_blank">Generate
-                a Twitch Access Token</a>
+    <div class="form-label-group mb-2 hide" id="access_token">
+        <small class="text-warning">* Requires Twitch Access Token</small>
+        <div class="mb-2">
+            <a href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=d62x6u7crlv5s4sgdd4icwkur6e9kd&redirect_uri=https://twitch-chat-forwarder.pages.dev/&scope=chat:read+chat:edit&force_verify=true"
+               target="_self"><img src="assets/images/connect.png"></a>
         </div>
+        <input type="password" id="accessToken" class="form-control">
+        <label for="accessToken">
+            <small>Access token</small>
+        </label>
+        <span id="show_token"
+              style="cursor:pointer;text-align:right;display:inline-block;width:100px;margin-top: 3px;font-size:smaller;vertical-align:top;"
+              title="Show/Hide">show
+        </span>
     </div>
     <div class="form-label-group mb-2">
         <input type="text" id="mainAccount" class="form-control" required>
@@ -35,16 +42,7 @@
             <small>Forward Messages To</small>
         </label>
     </div>
-    <div class="form-label-group mb-2">
-        <input type="password" id="accessToken" class="form-control" required>
-        <label for="accessToken">
-            <small>Access token from the account that you are forwarding messages to
-                <span id="show_token" style="cursor:pointer;text-align:right;display:inline-block;width:70px;font-size:smaller;vertical-align:top;" title="Show/Hide">
-                    show
-                </span>
-            </small>
-        </label>
-    </div>
+
     <div class="form-label-group mb-2">
         <select class="form-control" id="spChars">
             <option value="" selected>none</option>

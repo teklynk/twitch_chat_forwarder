@@ -1,7 +1,18 @@
-
 function onInit() {
     if (!window.localStorage) {
         alert('No support for localStorage');
+    }
+
+    let url = window.location.href;
+
+    if (url.indexOf('#access_token') !== -1) {
+        let access_token = new URL(url).hash.split('&').filter(function (el) {
+            if (el.match('access_token') !== null) return true;
+        })[0].split('=')[1];
+        document.getElementById("accessToken").value = access_token;
+        localStorage.setItem("accessToken", access_token);
+    } else {
+        document.getElementById("accessToken").value = localStorage.getItem("accessToken");
     }
 
     document.getElementById("mainAccount").value = localStorage.getItem("mainAccount");
@@ -71,7 +82,10 @@ function startChat(mainAccount, botAcccount, accessToken, spChars) {
     let usernameStr;
 
     const client = new tmi.Client({
-        options: {debug: true},
+        options: {
+            debug: true,
+            skipUpdatingEmotesets: true
+        },
         connection: {reconnect: true},
         identity: {
             username: botAcccount,
