@@ -12,9 +12,36 @@
 <body onload="onInit()">
 
 <div class="container">
-    <div class="text-center mt-4 mb-4">
-        <h1 class="h3 mb-2 font-weight-normal">Twitch Chat Forwarder</h1>
+    <div class="row">
+        <div class="col-10">
+            <h1 class="h3 pt-4 pl-lg-4 text-center">Twitch Chat Forwarder</h1>
+        </div>
+        <div class="col-2 text-center">
+            <img src="assets/images/robot.gif" style="width: 60px;" alt="">
+        </div>
     </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <p>This is strange right? Why would anyone need this?
+                <br><br>
+                PSVR (Playstation VR)
+                <br><br>
+                You can of course stream PSVR right from the Playstation but you will not have custom overlays, face
+                cam, transitions, custom alerts. The stream quality is not great and the video output that is streamed
+                to Twitch looks weird and fish-eyed.
+                <br><br>
+                You can also capture your PSVR on a PC and stream it that way. But how do you see chat while in your VR
+                headset?
+                <br><br>
+                One solution is to capture PSVR on a PC and stream it, while at the same time stream to Twitch from the
+                Playstation that is using an alternate Twitch account. This way you will be able to see chat while in
+                PSVR and still use OBS for transitions, overlays, alerts... The idea is to send chat messages from your
+                main Twitch account to the alternate Twitch account that your PSVR is using.
+            </p>
+        </div>
+    </div>
+    <br>
     <div class="form-label-group mb-2 hide" id="access_token">
         <small class="text-warning">* Requires Twitch Access Token</small>
         <div class="mb-2">
