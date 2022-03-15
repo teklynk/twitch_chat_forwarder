@@ -6,11 +6,16 @@ function onInit() {
     let url = window.location.href;
 
     if (url.indexOf('#access_token') !== -1) {
+        // extract the access_token from the url
         let access_token = new URL(url).hash.split('&').filter(function (el) {
             if (el.match('access_token') !== null) return true;
         })[0].split('=')[1];
+        // fill input with token value
         document.getElementById("accessToken").value = access_token;
+        // Save token to localstorage
         localStorage.setItem("accessToken", access_token);
+        // Redirect to default page after getting token
+        window.location.href = "https://twitch-chat-forwarder.pages.dev";
     } else {
         document.getElementById("accessToken").value = localStorage.getItem("accessToken");
     }
